@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const JWT_options = require('../config')['JWT_options'];
+const JWT_options = require('../config/config')['JWT_options'];
 
 module.exports = {
   validateToken: (req, res, next) => {

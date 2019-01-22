@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../../models/userModel');
+const userScopes = require('../../config/userScope');
 
 const connUri = process.env.MONGO_LOCAL_CONN_URL;
 
@@ -10,7 +11,7 @@ module.exports = {
       let status = 200;  // OK
       if (!err) {
         const payload = req.JWT_Decoded;
-        if (payload && payload.userRole === 'user') {
+        if (payload && payload.userScopes.includes(userScopes.GET_USERS)) {
           User.find({}, (err, users) => {
             if (!err) {
               result.status = status;
