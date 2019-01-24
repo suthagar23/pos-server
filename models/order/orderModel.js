@@ -4,11 +4,17 @@ const { ORDER_STATUS } = require('../../config/orderScope');
 
 const orderItemSchema = require('./orderItemModel');
 
+function generateOrderStatusEnums() {
+  return Object.keys(ORDER_STATUS);
+}
+
 const orderSchema = new Schema({
   orderStatus: {
     type: 'String',
     required: true,
     trim: true,
+    enum: generateOrderStatusEnums(),
+    uppercase: true,
   },
   orderMadeByUserId: {
     type: 'String',
@@ -25,10 +31,12 @@ const orderSchema = new Schema({
   orderGrossAmount: {
     type: 'Number',
     default: 0,
+    min: 0,
   },
   orderNetAmount: {
     type: 'Number',
     default: 0,
+    min: 0,
   },
   lastModifiedAt: {
     type: 'Date',

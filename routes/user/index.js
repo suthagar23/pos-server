@@ -1,14 +1,13 @@
-const { validateToken } = require('../../middleware/jwtValidation');
-const { checkUserScopes } = require('../../middleware/userScopeValidation');
 const userController = require('../../controllers/userController');
+const { authenticationMiddleWare } = require('../../middleware/index');
 
 module.exports = (router) => {
   router.route('/users')
-    .get(userController.getUsers);
+    .get(authenticationMiddleWare, userController.getUsers);
   router.route('/user')
-    .post(validateToken, checkUserScopes, userController.addUser);
+    .post(authenticationMiddleWare, userController.addUser);
   router.route('/user/:userId')
-    .get(userController.getUser);
+    .get(authenticationMiddleWare, userController.getUser);
   router.route('/user/userName/:userName')
-    .get(userController.getUserByName);
+    .get(authenticationMiddleWare, userController.getUserByName);
 };

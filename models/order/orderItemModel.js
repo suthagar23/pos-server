@@ -6,6 +6,8 @@ const orderItemSchema = new Schema({
     required: true,
     trim: true,
     unique: true,
+    maxlength: 10,
+    uppercase: true,
   },
   itemName: {
     type: 'String',
@@ -15,14 +17,18 @@ const orderItemSchema = new Schema({
   quantity: {
     type: 'Number',
     required: true,
+    min: 0,
   },
   unitPrice: {
     type: 'Number',
     required: true,
+    min: 0,
   },
   discountPercentage: {
     type: 'Number',
     required: true,
+    min: 0,
+    max: 100,
   },
 });
 

@@ -2,7 +2,7 @@ const appOptions = require('../config');
 
 function getRequiredUserScopeFromURL(restUrl, method) {
   const model = restUrl.replace(`${appOptions.RestOptions.baseUrl}/`, '');
-  return method.concat('_', model).toUpperCase();
+  return method.concat('_', model.split('/')[0]).toUpperCase();
 }
 
 module.exports = {

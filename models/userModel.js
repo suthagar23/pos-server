@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const { Schema } = require('mongoose');
+const validator = require('validator');
 const { dbConn } = require('../database/index');
 const authOptions = require('../config').auth;
 
@@ -9,6 +10,8 @@ const userSchema = new Schema({
     required: true,
     trim: true,
     unique: true,
+    maxlength: 25,
+    lowercase: true,
   },
   firstName: {
     type: 'String',
@@ -24,6 +27,11 @@ const userSchema = new Schema({
     type: 'String',
     required: true,
     trim: true,
+    lowercase: true,
+    validate: {
+      validator: validator.isEmail,
+      message: '{VALUE} is not a valid email',
+    },
   },
   password: {
     type: 'String',
@@ -47,6 +55,7 @@ const userSchema = new Schema({
     type: 'String',
     required: true,
     trim: true,
+    maxlength: 15,
   },
 });
 

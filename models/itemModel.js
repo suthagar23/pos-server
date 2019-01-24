@@ -7,6 +7,8 @@ const itemSchema = new Schema({
     required: true,
     trim: true,
     unique: true,
+    maxlength: 10,
+    uppercase: true,
   },
   itemName: {
     type: 'String',
@@ -21,13 +23,17 @@ const itemSchema = new Schema({
   unitPrice: {
     type: 'Number',
     required: true,
+    min: 0,
   },
   discountPercentage: {
     type: 'Number',
+    min: 0,
+    max: 100,
   },
   stockCount: {
     type: 'Number',
     required: true,
+    min: 0,
   },
   registerdAt: {
     type: 'Date',

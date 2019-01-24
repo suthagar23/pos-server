@@ -4,7 +4,6 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
-// const mongoose = require('mongoose');
 const routes = require('./routes/index.js');
 const appOptions = require('./config');
 
@@ -13,13 +12,9 @@ const router = express.Router();
 
 const environment = process.env.NODE_ENV; // development
 const appPort = process.env.PORT;
+const baseRestApiURL = appOptions.RestOptions.baseUrl;
 
-
-// parse application/json and look for raw text
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: true}));
-// app.use(bodyParser.text());
-// app.use(bodyParser.json({ type: 'application/json'}));
+app.use('/', bodyParser.text());
 app.use('/', bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true,
@@ -30,20 +25,36 @@ if (environment !== 'production') {
 }
 
 app.use(express.static(path.join(__dirname, 'public')));
-const baseRestApiURL = appOptions.RestOptions.baseUrl;
 app.use(baseRestApiURL, routes(router));
+
+// / catch 404 and forward to error handler
+app.use((req, res, next) => {
+  const err = new Error('Sorry, Request not found');
+  err.status = 404;
+  next(err);
+});
+// production error handler to avoid stacktraces leaked to user
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.json({
+    errors: {
+      message: err.message,
+      error: {},
+    },
+  });
+  const err1 = new Error('Sorry111111111, Request not found');
+  err1.status = 500;
+  next(err1);
+});
 
 
 app.listen(appPort, () => {
-  console.log(`Server now listening at localhost:${appPort}`);
+  console.log('Server now listening at localhost:', appPort);
 });
 
-// listen for the signal interruption (ctrl-c)
-// process.on('SIGINT', () => {
-//   console.log("exiting...")
-//   dbClient.close();
-//   process.exit();
-// });
-
+process.on('SIGINT', () => {
+  console.log('System Exiting...');
+  process.exit();
+});
 
 module.exports = app;
