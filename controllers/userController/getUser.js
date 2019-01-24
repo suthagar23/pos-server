@@ -1,7 +1,8 @@
 
 require('../../database/index').dbConn; // eslint-disable-line
 const User = require('../../models/userModel');
-const config = require('../../config');
+const config = require('../../config/serverConfig');
+const { errorMessages } = require('../../config/responseMessagesConfig');
 
 const dbFindLimit = config.DBOperations.findLimt;
 /**
@@ -49,7 +50,7 @@ async function getUserByUserId(req, res) {
   } else {
     status = 400; // Bad Request
     result.status = status;
-    result.error = 'Invalid userId';
+    result.error = errorMessages.REST.User.InvalidUserId;
     res.status(status).send(result);
   }
 }
@@ -78,7 +79,7 @@ async function getUserByUserName(req, res) {
   } else {
     status = 400; // Bad Request
     result.status = status;
-    result.error = 'Invalid userId';
+    result.error = errorMessages.REST.User.InvalidUserName;
     res.status(status).send(result);
   }
 }

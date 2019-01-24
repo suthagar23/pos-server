@@ -5,7 +5,8 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
 const routes = require('./routes/index.js');
-const appOptions = require('./config');
+const appOptions = require('./config/serverConfig');
+const { errorMessages } = require('./config/responseMessagesConfig');
 
 const app = express();
 const router = express.Router();
@@ -29,7 +30,7 @@ app.use(baseRestApiURL, routes(router));
 
 // / catch 404 and forward to error handler
 app.use((req, res, next) => {
-  const err = new Error('Sorry, Request not found');
+  const err = new Error(errorMessages.NotFound);
   err.status = 404;
   next(err);
 });
@@ -42,7 +43,7 @@ app.use((err, req, res, next) => {
       error: {},
     },
   });
-  const err1 = new Error('Sorry111111111, Request not found');
+  const err1 = new Error(errorMessages.NotFound);
   err1.status = 500;
   next(err1);
 });

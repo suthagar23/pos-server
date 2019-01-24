@@ -1,8 +1,5 @@
 module.exports = {
   systemName: 'Apple POS',
-  auth: {
-    saltingRounds: 2,
-  },
   RestOptions: {
     baseUrl: '/api/v1',
   },

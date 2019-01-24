@@ -1,6 +1,6 @@
 const { Schema } = require('mongoose');
 const { dbConn } = require('../../database/index');
-const { ORDER_STATUS } = require('../../config/orderScope');
+const { ORDER_STATUS } = require('../../config/orderScopeConfig');
 
 const orderItemSchema = require('./orderItemModel');
 

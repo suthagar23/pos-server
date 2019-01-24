@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const { Schema } = require('mongoose');
 const validator = require('validator');
 const { dbConn } = require('../database/index');
-const authOptions = require('../config').auth;
+const authOptions = require('../config/serverConfig').auth;
 
 const userSchema = new Schema({
   userName: {

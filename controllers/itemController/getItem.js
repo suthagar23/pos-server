@@ -1,7 +1,8 @@
 
 require('../../database/index').dbConn; // eslint-disable-line
 const Item = require('../../models/itemModel');
-const config = require('../../config');
+const config = require('../../config/serverConfig');
+const { errorMessages } = require('../../config/responseMessagesConfig');
 
 const dbFindLimit = config.DBOperations.findLimt;
 
@@ -50,7 +51,7 @@ async function getItemByItemId(req, res) {
   } else {
     status = 400; // Bad Request
     result.status = status;
-    result.error = 'Invalid itemId';
+    result.error = errorMessages.REST.Item.InvalidItemId;
     res.status(status).send(result);
   }
 }
@@ -79,7 +80,7 @@ async function getItemByItemCode(req, res) {
   } else {
     status = 400; // Bad Request
     result.status = status;
-    result.error = 'Invalid itemCode';
+    result.error = errorMessages.REST.Item.InvalidItemCode;
     res.status(status).send(result);
   }
 }
@@ -109,7 +110,7 @@ async function getItemByItemName(req, res) {
   } else {
     status = 400; // Bad Request
     result.status = status;
-    result.error = 'Invalid itemName';
+    result.error = errorMessages.REST.Item.InvalidItemName;
     res.status(status).send(result);
   }
 }

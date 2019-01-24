@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { JWT_OPTIONS } = require('../config').JWT_options;
+const { JWT_OPTIONS } = require('../config/serverConfig').JWT_options;
+const { errorMessages } = require('../config/responseMessagesConfig');
 
 module.exports = {
   validateToken: (req, res, next) => {
@@ -13,11 +14,11 @@ module.exports = {
         req.JWT_Decoded = result;
         next();
       } catch (err) {
-        throw new Error(err);
+        throw new Error(errorMessages.Authentication.Error);
       }
     } else {
       result = {
-        error: 'Authentication error. Token required.',
+        error: errorMessages.Authentication.TokenRequired,
         status: 401,
       };
       res.status(401).send(result);

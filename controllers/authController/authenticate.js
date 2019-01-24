@@ -2,8 +2,9 @@ require('../../database/index').dbConn; // eslint-disable-line
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../../models/userModel');
-const { JWT_OPTIONS } = require('../../config').JWT_options;
-const userScopes = require('../../config/userScope');
+const { JWT_OPTIONS } = require('../../config/serverConfig').JWT_options;
+const userScopes = require('../../config/userScopeConfig');
+const { errorMessages } = require('../../config/responseMessagesConfig');
 
 /**
  * Generate accessable user scopes for authenticated user
@@ -47,7 +48,7 @@ async function authenticateUser(req, res) {
         } else {
           status = 401; // Unauthorized
           result.status = status;
-          result.error = 'Authentication error, Invalid userName or Password';
+          result.error = errorMessages.Authentication.InvalidUserNamePassword;
         }
         res.status(status).send(result);
       }).catch((serverErr) => {
@@ -59,7 +60,7 @@ async function authenticateUser(req, res) {
     } else {
       status = 404; // Not Found
       result.status = status;
-      result.error = 'Invalid userName or Password';
+      result.error = errorMessages.Authentication.InvalidUserNamePassword;
       res.status(status).send(result);
     }
   });

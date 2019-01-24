@@ -1,4 +1,4 @@
-const { systemName } = require('./index');
+const { systemName } = require('./serverConfig');
 
 module.exports = Object.freeze({
   SwaggerOptions: {

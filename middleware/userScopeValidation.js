@@ -1,4 +1,5 @@
-const appOptions = require('../config');
+const appOptions = require('../config/serverConfig');
+const { errorMessages } = require('../config/responseMessagesConfig');
 
 function getRequiredUserScopeFromURL(restUrl, method) {
   const model = restUrl.replace(`${appOptions.RestOptions.baseUrl}/`, '');
@@ -17,14 +18,14 @@ module.exports = {
         next();
       } else {
         result = {
-          error: 'Access required.',
+          error: errorMessages.Authentication.AccessRequired,
           status: 403,
         };
         res.status(403).send(result);
       }
     } else {
       result = {
-        error: 'Authentication error. Access required.',
+        error: errorMessages.Authentication.AccessRequired,
         status: 401,
       };
       res.status(401).send(result);
