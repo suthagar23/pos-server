@@ -1,29 +1,27 @@
 
 require('../../database/index').dbConn; // eslint-disable-line
-const User = require('../../models/userModel');
+const Order = require('../../models/order/orderModel');
 
 /**
- * POST /user route to create a new user
+ * POST /order route to create a new order
  * @param {object} req - request object.
  * @param {object} res - response object.
  */
-async function addUser(req, res) {
+async function addOrder(req, res) {
   const result = {};
   let status = 201; // Created
   const {
-    userName, firstName, lastName, email, password,
+    orderStatus, orderMadeByUserId, orderGrossAmount, orderNetAmount, orderItems,
   } = req.body;
-  const user = new User({
-    userName,
-    firstName,
-    lastName,
-    email,
-    password,
-    userStatus: 'false',
-    userRole: 'user',
+  const order = new Order({
+    orderStatus,
+    orderMadeByUserId,
+    orderGrossAmount,
+    orderNetAmount,
+    orderItems,
   });
 
-  user.save((err, userObject) => {
+  order.save((err, userObject) => {
     if (!err) {
       result.status = status;
       result.result = userObject;
@@ -37,5 +35,5 @@ async function addUser(req, res) {
 }
 
 module.exports = {
-  addUser,
+  addOrder,
 };

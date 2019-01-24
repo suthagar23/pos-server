@@ -1,9 +1,9 @@
 const addUser = require('./addUser');
-const getAllUser = require('./getAllUser');
-const loginUser = require('./loginUser');
+const getUser = require('./getUser');
 
 module.exports = {
-    addUser : addUser.add,
-    getAllUser : getAllUser.getAll,
-    loginUser : loginUser.login
-}
+  addUser: addUser.addUser,
+  getUser: getUser.getUserByUserId,
+  getUserByName: getUser.getUserByUserName,
+  getUsers: getUser.getUsers,
+};

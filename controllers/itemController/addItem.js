@@ -1,29 +1,29 @@
 
 require('../../database/index').dbConn; // eslint-disable-line
-const User = require('../../models/userModel');
+const Item = require('../../models/itemModel');
 
 /**
- * POST /user route to create a new user
+ * POST /item route to create a new item
  * @param {object} req - request object.
  * @param {object} res - response object.
  */
-async function addUser(req, res) {
+async function addItem(req, res) {
   const result = {};
   let status = 201; // Created
   const {
-    userName, firstName, lastName, email, password,
+    itemCode, itemName, itemDescription, unitPrice, discountPercentage, stockCount,
   } = req.body;
-  const user = new User({
-    userName,
-    firstName,
-    lastName,
-    email,
-    password,
-    userStatus: 'false',
-    userRole: 'user',
+  const item = new Item({
+    itemCode,
+    itemName,
+    itemDescription,
+    unitPrice,
+    discountPercentage,
+    stockCount,
+    itemStatus: 'false',
   });
 
-  user.save((err, userObject) => {
+  item.save((err, userObject) => {
     if (!err) {
       result.status = status;
       result.result = userObject;
@@ -37,5 +37,5 @@ async function addUser(req, res) {
 }
 
 module.exports = {
-  addUser,
+  addItem,
 };
