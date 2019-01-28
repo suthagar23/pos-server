@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt');
 const { Schema } = require('mongoose');
 const validator = require('validator');
+const uniqueValidator = require('mongoose-unique-validator');
 const { dbConn } = require('../database/index');
 const authOptions = require('../config/serverConfig').auth;
+
 
 const userSchema = new Schema({
   userName: {
@@ -37,6 +39,7 @@ const userSchema = new Schema({
     type: 'String',
     required: true,
     trim: true,
+    select: false,
   },
   registerdAt: {
     type: 'Date',
@@ -80,6 +83,41 @@ userSchema.pre('save', (next) => {
       }
     });
   }
+});
+
+userSchema.methods = {
+  getFieldsForAuth() {
+    return {
+      userId: this._id,
+      userName: this.userName,
+      email: this.email,
+      password: this.password,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      userStatus: this.userStatus,
+      userRole: this.userRole,
+    };
+  },
+
+  /** Override the res.json(user) to avoid password */
+  toRegJSON() {
+    return {
+      userId: this._id,
+      userName: this.userName,
+      email: this.email,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      userStatus: this.userStatus,
+      userRole: this.userRole,
+      lastAccessedAt: this.lastAccessedAt,
+      lastModifiedAt: this.lastModifiedAt,
+      registerdAt: this.registerdAt,
+    };
+  },
+};
+
+userSchema.plugin(uniqueValidator, {
+  message: '{VALUE} already taken!',
 });
 
 module.exports = dbConn.model('User', userSchema);

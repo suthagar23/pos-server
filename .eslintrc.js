@@ -1,6 +1,7 @@
 module.exports = {
+  "parser": "babel-eslint",
     "parserOptions": {
-        "ecmaVersion": 2017
+        "ecmaVersion": 2017,
     },
     "env": {
         "es6": true,
@@ -11,7 +12,8 @@ module.exports = {
         "browser": true
     },
     "globals": {
-      "exampleGlobalVariable": true
+      "exampleGlobalVariable": true,
+      "_": false
     },
     // "extends": "eslint:recommended",
     "extends": "airbnb-base",
@@ -21,7 +23,8 @@ module.exports = {
       "indent": ["error", 2],
       "quotes": ["error","single"],
       "semi": [2,"always"],
-      "linebreak-style": ["error","unix"]
+      "linebreak-style": ["error","unix"],
+      "no-underscore-dangle": [2, { "allowAfterThis": true }]
     },
     "plugins": [
     ]

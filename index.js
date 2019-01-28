@@ -4,11 +4,24 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 const routes = require('./routes/index.js');
 const appOptions = require('./config/serverConfig');
 const { errorMessages } = require('./config/responseMessagesConfig');
 
 const app = express();
+// const whitelist = ['http://localhost:8080'];
+// const corsOptions = {
+//   origin(origin, respone) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       respone(null, true);
+//     } else {
+//       respone(new Error('Not allowed by CORS'));
+//     }
+//   },
+// };
+// app.use(cors(corsOptions));
+app.use(cors());
 const router = express.Router();
 
 const environment = process.env.NODE_ENV; // development
@@ -43,9 +56,9 @@ app.use((err, req, res, next) => {
       error: {},
     },
   });
-  const err1 = new Error(errorMessages.NotFound);
-  err1.status = 500;
-  next(err1);
+  // const err1 = new Error(errorMessages.NotFound);
+  // err1.status = 500;
+  next();
 });
 
 

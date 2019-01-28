@@ -34,17 +34,18 @@ async function authenticateUser(req, res) {
   const result = {};
   let status = 200; // OK
   const { userName, password } = req.body;
-  User.findOne({ userName }, (modelErr, user) => {
-    if (!modelErr && user) {
-      bcrypt.compare(password, user.password).then((match) => {
+  User.findOne({ userName }, (modelErr, userModel) => {
+    if (!modelErr && userModel) {
+      const { password: userPassword, ...userObject } = userModel.getFieldsForAuth();
+      bcrypt.compare(password, userPassword).then((match) => {
         if (match) {
           status = 200; // OK
           // Create a token
-          const JWT_PAYLOAD = createJSONPayLoad(user);
+          const JWT_PAYLOAD = createJSONPayLoad(userObject);
           const token = jwt.sign(JWT_PAYLOAD, process.env.JWT_SECRET, JWT_OPTIONS);
           result.token = token;
           result.status = status;
-          result.result = user;
+          result.result = userObject;
         } else {
           status = 401; // Unauthorized
           result.status = status;
@@ -58,12 +59,12 @@ async function authenticateUser(req, res) {
         res.status(status).send(result);
       });
     } else {
-      status = 404; // Not Found
+      status = 401; // Unauthorized
       result.status = status;
       result.error = errorMessages.Authentication.InvalidUserNamePassword;
       res.status(status).send(result);
     }
-  });
+  }).select('+password');
 }
 
 module.exports = {
