@@ -1,5 +1,5 @@
 // Response messages
-const respone = {
+const respone = Object.freeze({
   error: {
     Authentication: {
       Error: 'Authentication error.',
@@ -21,7 +21,7 @@ const respone = {
       },
     },
   },
-};
+});
 
 const translatedRespones = (() => respone)();
 

@@ -1,7 +1,12 @@
 const { Schema } = require('mongoose');
 const { dbConn } = require('../../database/index');
-const { ORDER_STATUS } = require('../../config/orderScopeConfig');
 const orderItemSchema = require('./orderItemModel');
+
+const ORDER_STATUS = {
+  NEW_ORDER: 'NEW_ORDER',
+  CANCELLED_ORDER: 'CANCELLED_ORDER',
+  FINISHED_ORDER: 'FINSIHED_ORDER',
+};
 
 // Generate all available Order Status array
 function generateOrderStatusEnums() {

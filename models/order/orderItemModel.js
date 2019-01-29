@@ -26,7 +26,6 @@ const orderItemSchema = new Schema({
   },
   discountPercentage: {
     type: 'Number',
-    required: true,
     min: 0,
     max: 100,
   },

@@ -1,8 +1,6 @@
 /* eslint-disable */
 let expect = require('chai').expect; 
 require('should'); 
-
-const bcrypt = require('bcrypt');
 const User = require('../../models/userModel');
 
 describe('UserModel', () => {
@@ -30,10 +28,20 @@ describe('UserModel', () => {
     });
   });
 
-  it('Should throw error if userStatus is empty', (done) => {
+  it('Should throw error if email is worong format', (done) => {
     const user = new User();
+    user.email = "wrongemail";
     user.validate((err) => {
-      expect(err.errors.userStatus).to.exist;
+      expect(err.errors.email).to.exist;
+      done();
+    });
+  });
+
+  it('Should Not throw error if email is correct format', (done) => {
+    const user = new User();
+    user.email = "correctemail@host.com";
+    user.validate((err) => {
+      expect(err.errors.email).to.not.exist;
       done();
     });
   });

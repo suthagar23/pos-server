@@ -14,6 +14,7 @@ const itemSchema = new Schema({
     type: 'String',
     trim: true,
     default: '',
+    required: true,
   },
   itemDescription: {
     type: 'String',

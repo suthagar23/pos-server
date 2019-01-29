@@ -1,5 +1,5 @@
 // Common server configurations, REST API, and JWT configurations
-module.exports = {
+module.exports = Object.freeze({
   systemName: 'Apple POS',
   RestOptions: {
     baseUrl: '/api/v1',
@@ -15,4 +15,4 @@ module.exports = {
   PasswordHash: {
     saltingRounds: 2,
   },
-};
+});
