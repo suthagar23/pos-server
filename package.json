@@ -6,7 +6,7 @@
   "scripts": {
     "test-mocha": "mocha  --exit",
     "dev": "cross-env nodemon index.js",
-    "pretest": "eslint --fix --ignore-path .gitignore --ignore-pattern 'coverage/*' .",
+    "pretest": "eslint --fix . --ignore-path .gitignore --ignore-pattern 'coverage/*' --ignore-pattern 'public/swagger3/*'",
     "test": "jest --forceExit",
     "coverage": "jest  --collectCoverageFrom=**.js --coverage --forceExit"
   },

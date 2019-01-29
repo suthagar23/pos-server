@@ -47,9 +47,11 @@ const itemSchema = new Schema({
   },
 });
 
+// Save registered date,lastModified date, and lastAccessed date while saving items
 itemSchema.pre('save', (next) => {
   const item = this;
   const currentDate = new Date();
+  // Don't add registered date if this item is an existing one
   if (!item.isModified || !item.isNew) {
     item.lastModifiedAt = currentDate;
     next();

@@ -1,3 +1,4 @@
+// Swagger Configurations to generate swagger.json
 const { systemName } = require('./serverConfig');
 
 module.exports = Object.freeze({

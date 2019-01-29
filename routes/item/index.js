@@ -1,4 +1,5 @@
 const itemController = require('../../controllers/itemController');
+// authenticationMiddleWare for validation JWT tokens and check for user access schopes
 const { authenticationMiddleWare } = require('../../middleware/index');
 
 module.exports = (router) => {
@@ -12,4 +13,6 @@ module.exports = (router) => {
     .get(authenticationMiddleWare, itemController.getItemByItemCode);
   router.route('/item/itemName/:itemName')
     .get(authenticationMiddleWare, itemController.getItemByItemName);
+  router.route('/item/search/:value')
+    .get(authenticationMiddleWare, itemController.searchItem);
 };

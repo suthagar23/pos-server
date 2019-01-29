@@ -1,10 +1,7 @@
-const bcrypt = require('bcrypt');
 const { Schema } = require('mongoose');
 const validator = require('validator');
 const uniqueValidator = require('mongoose-unique-validator');
 const { dbConn } = require('../database/index');
-const authOptions = require('../config/serverConfig').auth;
-
 
 const userSchema = new Schema({
   userName: {
@@ -62,29 +59,22 @@ const userSchema = new Schema({
   },
 });
 
-// encrypt password before save
+// Encrypt password before save
 userSchema.pre('save', (next) => {
   const user = this;
   const currentDate = new Date();
-  // don't rehash if it's an existing user
-  if (!user.isModified || !user.isNew) {
+  if (typeof user.registerdAt !== 'undefined') {
     user.lastModifiedAt = currentDate;
     next();
   } else {
-    bcrypt.hash(user.password, authOptions.saltingRounds, (err, hash) => {
-      if (err) {
-        console.error('Error hashing password for user', user.name);
-        next(err);
-      } else {
-        user.password = hash;
-        user.registerdAt = currentDate;
-        user.lastAccessedAt = currentDate;
-        next();
-      }
-    });
+    user.registerdAt = currentDate;
+    user.lastAccessedAt = currentDate;
+    next();
   }
 });
 
+
+// Get all fields from userModel including password for authentications
 userSchema.methods = {
   getFieldsForAuth() {
     return {
@@ -99,7 +89,7 @@ userSchema.methods = {
     };
   },
 
-  /** Override the res.json(user) to avoid password */
+  // Override the res.json(user) to avoid password
   toRegJSON() {
     return {
       userId: this._id,
@@ -116,6 +106,7 @@ userSchema.methods = {
   },
 };
 
+// Custom validation message for an existing user
 userSchema.plugin(uniqueValidator, {
   message: '{VALUE} already taken!',
 });

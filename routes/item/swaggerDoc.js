@@ -151,3 +151,36 @@
  *     security:
  *        - bearerAuth: []
  */
+
+
+/** *********************************************************
+ * GET /api/v1/item/search/:value
+ * @swagger
+ * /api/v1/item/search/{value}:
+ *   get:
+ *     tags:
+ *       - Item
+ *     description: Search for a item by itemName or itemCode
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         value: Search Query
+ *         schema:
+*              type: string
+ *         required: true
+ *     responses:
+ *        200:
+ *          $ref: '#/components/responses/Authenticated'
+ *        401:
+ *          $ref: '#/components/responses/Unauthorized'
+ *        404:
+ *          $ref: '#/components/responses/NotFound'
+ *        500:
+ *          $ref: '#/components/responses/ServerError'
+ *     components:
+ *        securitySchemes:
+ *          $ref: '#/components/securitySchemes/bearerAuth'
+ *     security:
+ *        - bearerAuth: []
+ */

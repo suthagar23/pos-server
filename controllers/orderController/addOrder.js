@@ -10,6 +10,7 @@ const Order = require('../../models/order/orderModel');
 async function addOrder(req, res) {
   const result = {};
   let status = 201; // Created
+  // Destructing requied fields from requests to save the order
   const {
     orderStatus, orderMadeByUserId, orderGrossAmount, orderNetAmount, orderItems,
   } = req.body;

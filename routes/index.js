@@ -1,3 +1,4 @@
+// Main Router to export all sub routings
 const users = require('./user');
 const swagger = require('./swagger');
 const auth = require('./auth');

@@ -13,6 +13,7 @@ const dbFindLimit = config.DBOperations.findLimt;
 async function getUsers(req, res) {
   const result = {};
   let status = 200; // OK
+  // Find all users, then Sort and limit respones
   User.find({}, (err, users) => {
     if (!err) {
       result.status = status;
@@ -36,6 +37,7 @@ async function getUserByUserId(req, res) {
   let status = 200; // OK
   const { userId } = req.params;
   if (userId) {
+    // Find user using userId, then Sort and limit respones
     User.findById(userId, (err, user) => {
       if (!err) {
         result.status = status;
@@ -65,6 +67,7 @@ async function getUserByUserName(req, res) {
   let status = 200; // OK
   const { userName } = req.params;
   if (userName) {
+    // Find user using userName, then Sort and limit respones
     User.find({ userName }, (err, user) => {
       if (!err) {
         result.status = status;

@@ -10,6 +10,7 @@ const Item = require('../../models/itemModel');
 async function addItem(req, res) {
   const result = {};
   let status = 201; // Created
+  // Destructing requied fields from requests to save the item
   const {
     itemCode, itemName, itemDescription, unitPrice, discountPercentage, stockCount,
   } = req.body;

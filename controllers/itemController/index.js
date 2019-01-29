@@ -7,4 +7,5 @@ module.exports = {
   getItemByItemId: getItem.getItemByItemId,
   getItemByItemCode: getItem.getItemByItemCode,
   getItemByItemName: getItem.getItemByItemName,
+  searchItem: getItem.searchItem,
 };

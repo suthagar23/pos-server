@@ -1,9 +1,9 @@
 const { Schema } = require('mongoose');
 const { dbConn } = require('../../database/index');
 const { ORDER_STATUS } = require('../../config/orderScopeConfig');
-
 const orderItemSchema = require('./orderItemModel');
 
+// Generate all available Order Status array
 function generateOrderStatusEnums() {
   return Object.keys(ORDER_STATUS);
 }
@@ -43,6 +43,7 @@ const orderSchema = new Schema({
   },
 });
 
+// Save registered date,lastModified date, and lastAccessed date while saving orders
 orderSchema.pre('save', (next) => {
   const item = this;
   const currentDate = new Date();

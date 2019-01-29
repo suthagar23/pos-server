@@ -4,7 +4,8 @@ const Item = require('../../models/itemModel');
 const config = require('../../config/serverConfig');
 const { errorMessages } = require('../../config/responseMessagesConfig');
 
-const dbFindLimit = config.DBOperations.findLimt;
+const dbFindLimit = config.DBOperations.findLimit;
+const dbSearchLimit = config.DBOperations.searchLimit;
 
 /**
  * GET /items route to retrieve all items
@@ -14,6 +15,7 @@ const dbFindLimit = config.DBOperations.findLimt;
 async function getItems(req, res) {
   const result = {};
   let status = 200; // OK
+  // Find all items, then Sort and limit respones
   Item.find({}, (err, users) => {
     if (!err) {
       result.status = status;
@@ -37,10 +39,11 @@ async function getItemByItemId(req, res) {
   let status = 200; // OK
   const { itemId } = req.params;
   if (itemId) {
-    Item.findById(itemId, (err, user) => {
+    // Find item using itemId, then Sort and limit respones
+    Item.findById(itemId, (err, item) => {
       if (!err) {
         result.status = status;
-        result.result = user;
+        result.result = item;
       } else {
         status = 500; // Internal Server Error
         result.status = status;
@@ -66,10 +69,11 @@ async function getItemByItemCode(req, res) {
   let status = 200; // OK
   const { itemCode } = req.params;
   if (itemCode) {
-    Item.find({ itemCode }, (err, user) => {
+    // Find item using itemCode, then Sort and limit respones
+    Item.find({ itemCode }, (err, item) => {
       if (!err) {
         result.status = status;
-        result.result = user;
+        result.result = item;
       } else {
         status = 500; // Internal Server Error
         result.status = status;
@@ -96,10 +100,11 @@ async function getItemByItemName(req, res) {
   let status = 200; // OK
   const { itemName } = req.params;
   if (itemName) {
-    Item.find({ itemName }, (err, user) => {
+    // Find item using itemName, then Sort and limit respones
+    Item.find({ itemName }, (err, item) => {
       if (!err) {
         result.status = status;
-        result.result = user;
+        result.result = item;
       } else {
         status = 500; // Internal Server Error
         result.status = status;
@@ -115,9 +120,43 @@ async function getItemByItemName(req, res) {
   }
 }
 
+/**
+ * GET /item/search/:value route to search for a item by itemName or ItemCode
+ * @param {object} req - request object.
+ * @param {object} res - response object.
+ */
+async function searchItem(req, res) {
+  const result = {};
+  let status = 200; // OK
+  const { value } = req.params;
+  if (value) {
+    // Search item using itemName or itemCode, then Sort and limit respones
+    // ItemName : value*
+    // ItemCode : value*
+    Item.find({ $or: [{ itemName: { $regex: value } }, { itemCode: { $regex: value } }] },
+      (err, item) => {
+        if (!err) {
+          result.status = status;
+          result.result = item;
+        } else {
+          status = 500; // Internal Server Error
+          result.status = status;
+          result.error = err;
+        }
+        res.status(status).send(result);
+      }).sort({ $natural: -1 }).limit(dbSearchLimit);
+  } else {
+    status = 400; // Bad Request
+    result.status = status;
+    result.error = errorMessages.REST.Item.InvalidItemId;
+    res.status(status).send(result);
+  }
+}
+
 module.exports = {
   getItems,
   getItemByItemId,
   getItemByItemName,
   getItemByItemCode,
+  searchItem,
 };

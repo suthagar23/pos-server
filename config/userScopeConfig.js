@@ -1,3 +1,4 @@
+// User access level scopes Constants to tract the user requsts on actions
 module.exports = Object.freeze({
   GET_USERS: 'GET_USERS',
   GET_USER: 'GET_USER',
@@ -8,4 +9,5 @@ module.exports = Object.freeze({
   GET_ORDERS: 'GET_ORDERS',
   GET_ORDER: 'GET_ORDER',
   POST_ORDER: 'POST_ORDER',
+  SEARCH_ITEM: 'SEARCH_ITEM',
 });
