@@ -24,10 +24,10 @@ async function addItem(req, res) {
     itemStatus: 'false',
   });
 
-  item.save((err, userObject) => {
+  item.save((err, itemObject) => {
     if (!err) {
       result.status = status;
-      result.result = userObject;
+      result.result = itemObject;
     } else {
       status = 500; // Internal Server Error
       result.status = status;

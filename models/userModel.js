@@ -1,9 +1,8 @@
-const { Schema } = require('mongoose');
+const mongoose = require('mongoose');
 const validator = require('validator');
 const uniqueValidator = require('mongoose-unique-validator');
-const { dbConn } = require('../database/index');
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   userName: {
     type: 'String',
     required: true,
@@ -111,4 +110,4 @@ userSchema.plugin(uniqueValidator, {
   message: '{VALUE} already taken!',
 });
 
-module.exports = dbConn.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);

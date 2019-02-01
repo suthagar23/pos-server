@@ -1,7 +1,6 @@
-const { Schema } = require('mongoose');
-const { dbConn } = require('../database/index');
+const mongoose = require('mongoose');
 
-const itemSchema = new Schema({
+const itemSchema = new mongoose.Schema({
   itemCode: {
     type: 'String',
     required: true,
@@ -53,7 +52,7 @@ itemSchema.pre('save', (next) => {
   const item = this;
   const currentDate = new Date();
   // Don't add registered date if this item is an existing one
-  if (!item.isModified || !item.isNew) {
+  if (typeof item.registerdAt !== 'undefined') {
     item.lastModifiedAt = currentDate;
     next();
   } else {
@@ -63,4 +62,4 @@ itemSchema.pre('save', (next) => {
   }
 });
 
-module.exports = dbConn.model('Item', itemSchema);
+module.exports = mongoose.model('Item', itemSchema);

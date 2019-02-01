@@ -16,10 +16,10 @@ async function getItems(req, res) {
   const result = {};
   let status = 200; // OK
   // Find all items, then Sort and limit respones
-  Item.find({}, (err, users) => {
+  Item.find({}, (err, items) => {
     if (!err) {
       result.status = status;
-      result.result = users;
+      result.result = items;
     } else {
       status = 500; // Internal Server Error
       result.status = status;
@@ -133,18 +133,22 @@ async function searchItem(req, res) {
     // Search item using itemName or itemCode, then Sort and limit respones
     // ItemName : value*
     // ItemCode : value*
-    Item.find({ $or: [{ itemName: { $regex: value } }, { itemCode: { $regex: value } }] },
-      (err, item) => {
-        if (!err) {
-          result.status = status;
-          result.result = item;
-        } else {
-          status = 500; // Internal Server Error
-          result.status = status;
-          result.error = err;
-        }
-        res.status(status).send(result);
-      }).sort({ $natural: -1 }).limit(dbSearchLimit);
+    const caseInSensitivePattern = new RegExp(`.*${value}.*`, 'i');
+    Item.find({
+      $or: [{ itemName: { $regex: caseInSensitivePattern } },
+        { itemCode: { $regex: caseInSensitivePattern } }],
+    },
+    (err, item) => {
+      if (!err) {
+        result.status = status;
+        result.result = item;
+      } else {
+        status = 500; // Internal Server Error
+        result.status = status;
+        result.error = err;
+      }
+      res.status(status).send(result);
+    }).sort({ $natural: -1 }).limit(dbSearchLimit);
   } else {
     status = 400; // Bad Request
     result.status = status;

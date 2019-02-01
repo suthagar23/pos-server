@@ -20,7 +20,8 @@ const corsOptions = {
     }
   },
 };
-app.use(cors(corsOptions)); // eslint-disable-line
+// app.use(cors(corsOptions)); // eslint-disable-line
+app.use(cors());
 
 const router = express.Router();
 const environment = process.env.NODE_ENV;

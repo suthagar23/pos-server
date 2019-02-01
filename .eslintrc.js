@@ -24,7 +24,8 @@ module.exports = {
       "quotes": ["error","single"],
       "semi": [2,"always"],
       "linebreak-style": ["error","unix"],
-      "no-underscore-dangle": [2, { "allowAfterThis": true }]
+      "no-underscore-dangle": [2, { "allowAfterThis": true }],
+      "no-param-reassign": ["error", { "props": false }]
     },
     "plugins": [
     ]

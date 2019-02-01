@@ -1,5 +1,4 @@
-const { Schema } = require('mongoose');
-const { dbConn } = require('../../database/index');
+const mongoose = require('mongoose');
 const orderItemSchema = require('./orderItemModel');
 
 const ORDER_STATUS = {
@@ -13,7 +12,7 @@ function generateOrderStatusEnums() {
   return Object.keys(ORDER_STATUS);
 }
 
-const orderSchema = new Schema({
+const orderSchema = new mongoose.Schema({
   orderStatus: {
     type: 'String',
     required: true,
@@ -33,7 +32,7 @@ const orderSchema = new Schema({
     type: 'Date',
   },
   orderItems: [orderItemSchema],
-  orderGrossAmount: {
+  orderDiscount: {
     type: 'Number',
     default: 0,
     min: 0,
@@ -52,7 +51,7 @@ const orderSchema = new Schema({
 orderSchema.pre('save', (next) => {
   const item = this;
   const currentDate = new Date();
-  if (!item.isModified || !item.isNew) {
+  if (item.orderStaredDate !== undefined) {
     item.lastModifiedAt = currentDate;
     next();
   } else {
@@ -63,4 +62,4 @@ orderSchema.pre('save', (next) => {
   }
 });
 
-module.exports = dbConn.model('Order', orderSchema);
+module.exports = mongoose.model('Order', orderSchema);

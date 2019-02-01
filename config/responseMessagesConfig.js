@@ -19,6 +19,10 @@ const respone = Object.freeze({
         InvalidUserId: 'Invalid userId',
         InvalidUserName: 'Invalid UserName',
       },
+      Order: {
+        InvalidOrderId: 'Invalid Order Id',
+        InvalidOrderStatus: 'Invalid Order Status',
+      },
     },
   },
 });
