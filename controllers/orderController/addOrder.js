@@ -15,7 +15,7 @@ async function addOrder(req, res) {
   Order.findById(orderId, (err, order) => {
     if (!order) {
       const {
-        orderStatus, orderMadeByUserId, orderGrossAmount, orderNetAmount, orderItems, orderDiscount,
+        orderStatus, orderMadeByUserId, orderGrossAmount, orderNetAmount, orderItems, orderDiscount, orderStartedDate,
       } = req.body;
       const newOrder = new Order({
         orderStatus,
@@ -24,10 +24,13 @@ async function addOrder(req, res) {
         orderNetAmount,
         orderItems,
         orderDiscount,
+        orderStartedDate,
       });
-
+      const currentDate = new Date();
+      newOrder.lastModifiedAt = currentDate;
       newOrder.save((errObj, orderObject) => {
         if (!err) {
+          console.log(orderObject)
           result.status = status;
           result.result = orderObject;
         } else {
@@ -45,6 +48,8 @@ async function addOrder(req, res) {
           order[key] = data[key];
         }
       });
+      const currentDate = new Date();
+      order.lastModifiedAt = currentDate;
       order.save((errSaved, savedOrderObject) => {
         if (!errSaved) {
           result.status = status;

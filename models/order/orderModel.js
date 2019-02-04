@@ -25,7 +25,7 @@ const orderSchema = new mongoose.Schema({
     trim: true,
     default: '',
   },
-  orderStaredDate: {
+  orderStartedDate: {
     type: 'Date',
   },
   orderEndedDate: {
@@ -51,11 +51,11 @@ const orderSchema = new mongoose.Schema({
 orderSchema.pre('save', (next) => {
   const item = this;
   const currentDate = new Date();
-  if (item.orderStaredDate !== undefined) {
+  if (item.orderStartedDate !== undefined) {
     item.lastModifiedAt = currentDate;
     next();
   } else {
-    item.orderStaredDate = currentDate;
+    item.orderStartedDate = currentDate;
     item.lastModifiedAt = currentDate;
     item.orderStatus = ORDER_STATUS.NEW_ORDER;
     next();
