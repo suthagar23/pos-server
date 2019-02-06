@@ -4,7 +4,8 @@
 
 1. Clone and enter the project directory
 2. run ```npm install``` command in your terminal
-3. run ```npm start dev``` command, then the POS system will be launched in your default browser.
+3. create a ```.env``` according to the sample of ```.env-sample``` file
+4. run ```npm start dev``` command, then the POS system will be launched in your default browser.
 
 ### API Schemas - Swagger Image Attachement
 
