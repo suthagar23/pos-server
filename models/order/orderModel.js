@@ -47,19 +47,19 @@ const orderSchema = new mongoose.Schema({
   },
 });
 
-// Save registered date,lastModified date, and lastAccessed date while saving orders
-orderSchema.pre('save', (next) => {
-  const item = this;
-  const currentDate = new Date();
-  if (item.orderStartedDate !== undefined) {
-    item.lastModifiedAt = currentDate;
-    next();
-  } else {
-    item.orderStartedDate = currentDate;
-    item.lastModifiedAt = currentDate;
-    item.orderStatus = ORDER_STATUS.NEW_ORDER;
-    next();
-  }
-});
+// // Save registered date,lastModified date, and lastAccessed date while saving orders
+// orderSchema.pre('save', function example(next) {
+//   const item = this;
+//   const currentDate = new Date();
+//   if (item.orderStartedDate !== undefined) {
+//     item.lastModifiedAt = currentDate;
+//     next();
+//   } else {
+//     item.orderStartedDate = currentDate;
+//     item.lastModifiedAt = currentDate;
+//     item.orderStatus = ORDER_STATUS.NEW_ORDER;
+//     next();
+//   }
+// });
 
 module.exports = mongoose.model('Order', orderSchema);

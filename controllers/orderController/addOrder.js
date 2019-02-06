@@ -15,7 +15,8 @@ async function addOrder(req, res) {
   Order.findById(orderId, (err, order) => {
     if (!order) {
       const {
-        orderStatus, orderMadeByUserId, orderGrossAmount, orderNetAmount, orderItems, orderDiscount, orderStartedDate,
+        orderStatus, orderMadeByUserId, orderGrossAmount, orderNetAmount,
+        orderItems, orderDiscount, orderStartedDate,
       } = req.body;
       const newOrder = new Order({
         orderStatus,
@@ -30,7 +31,7 @@ async function addOrder(req, res) {
       newOrder.lastModifiedAt = currentDate;
       newOrder.save((errObj, orderObject) => {
         if (!err) {
-          console.log(orderObject)
+          console.log(orderObject);
           result.status = status;
           result.result = orderObject;
         } else {
@@ -83,7 +84,7 @@ async function updateOrderItems(req, res) {
       res.status(status).send(result);
       return result;
     }
-    
+
     if (orderItem !== undefined && orderItem.itemCode !== undefined) {
       let itemFound = false;
       order.orderItems.forEach((item, key) => {
@@ -109,6 +110,7 @@ async function updateOrderItems(req, res) {
         return savedOrderObject;
       });
     }
+    return null;
   });
 }
 

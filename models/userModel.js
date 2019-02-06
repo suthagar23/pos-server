@@ -58,19 +58,19 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// Encrypt password before save
-userSchema.pre('save', (next) => {
-  const user = this;
-  const currentDate = new Date();
-  if (typeof user.registerdAt !== 'undefined') {
-    user.lastModifiedAt = currentDate;
-    next();
-  } else {
-    user.registerdAt = currentDate;
-    user.lastAccessedAt = currentDate;
-    next();
-  }
-});
+// // Encrypt password before save
+// userSchema.pre('save', (next) => {
+//   const user = this;
+//   const currentDate = new Date();
+//   if (typeof user.registerdAt !== 'undefined') {
+//     user.lastModifiedAt = currentDate;
+//     next();
+//   } else {
+//     user.registerdAt = currentDate;
+//     user.lastAccessedAt = currentDate;
+//     next();
+//   }
+// });
 
 
 // Get all fields from userModel including password for authentications

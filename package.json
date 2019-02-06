@@ -7,8 +7,9 @@
     "test-mocha": "mocha  --exit",
     "dev": "cross-env nodemon index.js",
     "pretest": "eslint --fix . --ignore-path .gitignore --ignore-pattern 'coverage/*' --ignore-pattern 'public/swagger3/*'",
-    "test": "jest --forceExit",
-    "coverage": "jest  --collectCoverageFrom=**.js --coverage --forceExit"
+    "testJest": "jest --forceExit",
+    "test": "NODE_ENV=test mocha test/ --recursive --exit",
+    "coverage": "NODE_ENV=test nyc mocha test/  --recursive --exit --collectCoverageFrom=**.js --coverage",
   },
   "keywords": [],
   "author": "",
@@ -35,7 +36,9 @@
     "eslint-plugin-jest": "^22.1.3",
     "jest": "^23.6.0",
     "mocha": "^5.2.0",
+    "node-mocks-http": "^1.7.3",
     "nodemon": "^1.18.9",
+    "nyc": "^13.2.0",
     "should": "^13.2.3",
     "supertest": "^3.4.2"
   }

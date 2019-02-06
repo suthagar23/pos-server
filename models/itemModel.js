@@ -47,19 +47,19 @@ const itemSchema = new mongoose.Schema({
   },
 });
 
-// Save registered date,lastModified date, and lastAccessed date while saving items
-itemSchema.pre('save', (next) => {
-  const item = this;
-  const currentDate = new Date();
-  // Don't add registered date if this item is an existing one
-  if (typeof item.registerdAt !== 'undefined') {
-    item.lastModifiedAt = currentDate;
-    next();
-  } else {
-    item.registerdAt = currentDate;
-    item.lastAccessedAt = currentDate;
-    next();
-  }
-});
+// // Save registered date,lastModified date, and lastAccessed date while saving items
+// itemSchema.pre('save', (next) => {
+//   const item = this;
+//   const currentDate = new Date();
+//   // Don't add registered date if this item is an existing one
+//   if (typeof item.registerdAt !== 'undefined') {
+//     item.lastModifiedAt = currentDate;
+//     next();
+//   } else {
+//     item.registerdAt = currentDate;
+//     item.lastAccessedAt = currentDate;
+//     next();
+//   }
+// });
 
 module.exports = mongoose.model('Item', itemSchema);

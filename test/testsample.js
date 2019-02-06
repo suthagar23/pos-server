@@ -5,13 +5,13 @@ let expect = require('chai').expect; // eslint-disable-line
 //   expect(res.body.status).to.equal(401);
 // };
 
-function sum(a, b) {
-  return a + b;
-}
+// function sum(a, b) {
+//   return a + b;
+// }
 
-test('Adding 1 + 1 equals 2', () => {
-  expect(sum(1, 1)).to.be(2);
-});
+// test('Adding 1 + 1 equals 2', () => {
+//   expect(sum(1, 1)).to.be(2);
+// });
 
 
 // const request = require('supertest');

@@ -10,16 +10,16 @@ const { errorMessages } = require('./config/responseMessagesConfig');
 
 const app = express();
 // CORS whitelist to allow host names
-const whitelist = ['http://localhost:8080'];
-const corsOptions = {
-  origin(origin, respone) {
-    if (whitelist.indexOf(origin) !== -1) {
-      respone(null, true);
-    } else {
-      respone(new Error('Not allowed by CORS'));
-    }
-  },
-};
+// const whitelist = ['http://localhost:8080'];
+// const corsOptions = {
+//   origin(origin, respone) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       respone(null, true);
+//     } else {
+//       respone(new Error('Not allowed by CORS'));
+//     }
+//   },
+// };
 // app.use(cors(corsOptions)); // eslint-disable-line
 app.use(cors());
 

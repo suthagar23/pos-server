@@ -1,6 +1,7 @@
 /* eslint-disable */
 let expect = require('chai').expect; 
 require('should'); 
+process.env.MONGO_URL = 'mongodb://localhost:27017/test1';
 const Item = require('../../models/itemModel');
 
 describe('ItemModel', () => {
